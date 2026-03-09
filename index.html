@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F2F2F7">
+    <title>Qtime</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* iOS 系统色彩 */
+            --ios-bg: #F2F2F7;
+            --ios-card: #FFFFFF;
+            --ios-blue: #007AFF;
+            --ios-blue-light: #5AC8FA;
+            --ios-gray: #8E8E93;
+            --ios-gray2: #AEAEB2;
+            --ios-gray5: #E5E5EA;
+            --ios-label: #000000;
+            --ios-secondary: #6C6C70;
+            --ios-tertiary: #9CA3AF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--ios-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px 30px;
+            color: var(--ios-label);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Logo 区域 - iOS 风格简洁设计 */
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--ios-blue) 0%, #5856D6 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 
+                0 4px 20px rgba(0, 122, 255, 0.25),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--ios-label);
+            margin-bottom: 4px;
+        }
+
+        .brand-tagline {
+            font-size: 15px;
+            color: var(--ios-secondary);
+            font-weight: 400;
+        }
+
+        /* 主时钟卡片 - iOS 分组风格 */
+        .clock-card {
+            width: 100%;
+            background: var(--ios-card);
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.04),
+                0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .timezone-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--ios-gray5);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ios-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+        }
+
+        .timezone-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #34C759;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .date-display {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--ios-label);
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .time-display {
+            font-size: 56px;
+            font-weight: 200;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -1px;
+            color: var(--ios-label);
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 2px;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .milliseconds {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--ios-blue);
+            min-width: 50px;
+        }
+
+        .separator {
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .weekday {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--ios-secondary);
+        }
+
+        /* 信息区域 */
+        .info-text {
+            font-size: 13px;
+            color: var(--ios-tertiary);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* 底部彩蛋区域 */
+        .footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+        }
+
+        .easter-egg {
+            font-size: 12px;
+            color: var(--ios-gray2);
+            line-height: 1.6;
+        }
+
+        .easter-egg .days {
+            color: var(--ios-blue);
+            font-weight: 600;
+        }
+
+        .creator {
+            font-size: 11px;
+            color: var(--ios-gray);
+            margin-top: 4px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 400px) {
+            .time-display {
+                font-size: 48px;
+            }
+            .milliseconds {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-section">
+            <div class="logo-icon">
+                <svg class="logo-svg" viewBox="0 0 40 40" fill="none">
+                    <!-- 简洁的时钟图标 -->
+                    <circle cx="20" cy="20" r="18" stroke="white" stroke-width="2.5" fill="none" opacity="0.9"/>
+                    <line x1="20" y1="20" x2="20" y2="10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="20" y1="20" x2="28" y2="20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="20" cy="20" r="2" fill="white"/>
+                </svg>
+            </div>
+            <div class="brand-name">Qtime</div>
+            <div class="brand-tagline">精准北京时间</div>
+        </div>
+
+        <!-- 主时钟 -->
+        <div class="clock-card">
+            <div class="timezone-badge">北京时间 UTC+8</div>
+            <div class="date-display" id="date">--</div>
+            <div class="time-display">
+                <span id="hours">00</span><span class="separator">:</span><span id="minutes">00</span><span class="separator">:</span><span id="seconds">00</span><span class="milliseconds" id="milliseconds">.000</span>
+            </div>
+            <div class="weekday" id="weekday">--</div>
+        </div>
+
+        <div class="info-text">精确到毫秒 · 实时同步</div>
+    </div>
+
+    <!-- 底部彩蛋 -->
+    <div class="footer">
+        <div class="easter-egg">
+            2024/6/16，It's been <span class="days" id="anniversary-days">--</span> Day since today
+        </div>
+        <div class="creator">created by DrChen©️</div>
+    </div>
+
+    <script>
+        const ANNIVERSARY_DATE = new Date('2024-06-16T00:00:00');
+
+        function pad(num, length = 2) {
+            return String(num).padStart(length, '0');
+        }
+
+        function calculateAnniversaryDays() {
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const anniv = new Date(ANNIVERSARY_DATE);
+            return Math.floor((today - anniv) / (1000 * 60 * 60 * 24));
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const beijingTime = new Date(utc + (8 * 3600000));
+            
+            const year = beijingTime.getFullYear();
+            const month = pad(beijingTime.getMonth() + 1);
+            const date = pad(beijingTime.getDate());
+            const hours = pad(beijingTime.getHours());
+            const minutes = pad(beijingTime.getMinutes());
+            const seconds = pad(beijingTime.getSeconds());
+            const milliseconds = pad(beijingTime.getMilliseconds(), 3);
+            
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            
+            document.getElementById('date').textContent = `${year}年${month}月${date}日`;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+            document.getElementById('milliseconds').textContent = `.${milliseconds}`;
+            document.getElementById('weekday').textContent = weekdays[beijingTime.getDay()];
+        }
+
+        function updateAnniversary() {
+            document.getElementById('anniversary-days').textContent = calculateAnniversaryDays();
+        }
+
+        function startUpdate() {
+            updateAnniversary();
+            const update = () => {
+                updateClock();
+                requestAnimationFrame(update);
+            };
+            requestAnimationFrame(update);
+        }
+
+        startUpdate();
+    </script>
+</body>
+</html>
